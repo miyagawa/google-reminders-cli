@@ -60,7 +60,7 @@ def invoke_operation(args):
             dt = parse_time_str(time_str)
             if dt is None:
                 return
-            reminder = Reminder(id=gen_id(), title=title, dt=dt)
+            reminder = Reminder(id=gen_id(), title=title, dt=dt, all_day=args.all_day)
         
         # execute creation if applicable
         if reminder is not None:
@@ -113,6 +113,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Google reminders cli',
                                      epilog=time_string_explain,
                                      formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('-a', action='store_true', dest='all_day',
+                        help='create an all-day reminder')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-i', action='store_true', dest='interactive',
                        help='create a reminder by entering details interactively')
